@@ -8,7 +8,7 @@ ARG uid=1000
 ARG gid=1000
 ARG http_port=$PORT
 ARG agent_port=50000
-ARG JENKINS_HOME=s3data:/var/jenkins_home
+ARG JENKINS_HOME=/var/jenkins_home
 
 ENV JENKINS_HOME $JENKINS_HOME
 ENV JENKINS_SLAVE_AGENT_PORT ${agent_port}
