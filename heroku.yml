@@ -2,4 +2,4 @@ build:
   docker:
     web: Dockerfile
 run:
-  web: ./jenkins.sh
+  web: /usr/local/bin/jenkins.sh
