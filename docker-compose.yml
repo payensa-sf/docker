@@ -21,4 +21,3 @@ master:
     - "8080:8080"
   volumes:
     - s3data:/var/jenkins_home
-    - /var/jenkins_home
