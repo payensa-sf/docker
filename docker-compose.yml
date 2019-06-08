@@ -5,11 +5,11 @@ volumes:
 services:
   s3vol:
     image: elementar/s3-volume
-    command: /data s3://{BUCKET NAME}
+    command: /data s3://BUCKETEER_BUCKET_NAME
     environment:
       - BACKUP_INTERVAL={INTERVALL IN MINUTES (2m)}
-      - AWS_ACCESS_KEY_ID={KEY}
-      - AWS_SECRET_ACCESS_KEY={SECRET}
+      - AWS_ACCESS_KEY_ID=$BUCKETEER_AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=BUCKETEER_AWS_SECRET_ACCESS_KEY
     volumes:
       - s3data:/data
 master:
