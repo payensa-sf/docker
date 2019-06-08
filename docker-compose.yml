@@ -1,3 +1,17 @@
+volumes:
+  s3data:
+    driver: local
+
+services:
+  s3vol:
+    image: elementar/s3-volume
+    command: /data s3://{BUCKET NAME}
+    environment:
+      - BACKUP_INTERVAL={INTERVALL IN MINUTES (2m)}
+      - AWS_ACCESS_KEY_ID={KEY}
+      - AWS_SECRET_ACCESS_KEY={SECRET}
+    volumes:
+      - s3data:/data
 master:
   build: .
   environment:
@@ -6,4 +20,5 @@ master:
     - "50000:50000"
     - "8080:8080"
   volumes:
+    - s3data:/var/jenkins_home
     - /var/jenkins_home
