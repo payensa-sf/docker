@@ -8,7 +8,7 @@ ARG uid=1000
 ARG gid=1000
 ARG http_port=$PORT
 ARG agent_port=50000
-ARG JENKINS_HOME=s3data:/var/jenkins_home
+ARG JENKINS_HOME=/var/jenkins_home
 
 ENV JENKINS_HOME $JENKINS_HOME
 ENV JENKINS_SLAVE_AGENT_PORT ${agent_port}
@@ -16,6 +16,7 @@ ENV JENKINS_SLAVE_AGENT_PORT ${agent_port}
 # Jenkins is run with user `jenkins`, uid = 1000
 # If you bind mount a volume from the host or a data container,
 # ensure you use the same uid
+RUN ln -s s3data:$JENKINS_HOME $JENKINS_HOME
 RUN mkdir -p $JENKINS_HOME \
   && chown ${uid}:${gid} $JENKINS_HOME \
   && groupadd -g ${gid} ${group} \
