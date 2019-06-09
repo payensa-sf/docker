@@ -7,7 +7,7 @@ services:
     image: elementar/s3-volume
     command: /data s3://BUCKETEER_BUCKET_NAME
     environment:
-      - BACKUP_INTERVAL={INTERVALL IN MINUTES (2m)}
+      - BACKUP_INTERVAL=2
       - AWS_ACCESS_KEY_ID=$BUCKETEER_AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY=BUCKETEER_AWS_SECRET_ACCESS_KEY
     volumes:
