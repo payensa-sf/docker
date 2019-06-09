@@ -18,9 +18,9 @@ ENV JENKINS_SLAVE_AGENT_PORT ${agent_port}
 # ensure you use the same uid
 RUN ln -s s3data:$JENKINS_HOME $JENKINS_HOME
 # RUN mkdir -p $JENKINS_HOME \
-RUN chown ${uid}:${gid} $JENKINS_HOME \
-  && groupadd -g ${gid} ${group} \
-  && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
+#  && chown ${uid}:${gid} $JENKINS_HOME \
+#  && groupadd -g ${gid} ${group} \
+#  && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
 
 # Jenkins home directory is a volume, so configuration and build history
 # can be persisted and survive image upgrades
