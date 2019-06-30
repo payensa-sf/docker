@@ -1,22 +1,26 @@
 FROM openjdk:8-jdk-stretch
+ARG JENKINS_HOME=/var/jenkins_home
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y git curl build-essential libfuse-dev fuse libcurl4-openssl-dev libxml2-dev mime-support&& rm -rf /var/lib/apt/lists/*
-
+RUN apt-get update && apt-get upgrade -y && apt-get install -y git curl fuse python-pip && rm -rf /var/lib/apt/lists/* && pip install yas3fs
+ # uncomment user_allow_other
+ && sed -i'' 's/^# *user_allow_other/user_allow_other/' /etc/fuse.conf \
+ # make it readable by anybody, it is not the default on Ubuntu
+ && chmod a+r /etc/fuse.conf \
+ 
 ARG user=jenkins
 ARG group=jenkins
 ARG uid=1000
 ARG gid=1000
 ARG http_port=$PORT
 ARG agent_port=50000
-ARG JENKINS_HOME=/var/jenkins_home
 
 ENV JENKINS_HOME $JENKINS_HOME
 ENV JENKINS_SLAVE_AGENT_PORT ${agent_port}
-
+RUN mkdir -p "${JENKINS_HOME}"
 # Jenkins is run with user `jenkins`, uid = 1000
 # If you bind mount a volume from the host or a data container,
 # ensure you use the same uid
-RUN ln -s s3data:$JENKINS_HOME $JENKINS_HOME
+
 # RUN mkdir -p $JENKINS_HOME \
 #  && chown ${uid}:${gid} $JENKINS_HOME \
 RUN groupadd -g ${gid} ${group} \
@@ -25,7 +29,7 @@ RUN groupadd -g ${gid} ${group} \
 
 # Jenkins home directory is a volume, so configuration and build history
 # can be persisted and survive image upgrades
-VOLUME $JENKINS_HOME
+VOLUME ["${JENKINS_HOME}"]
 
 # `/usr/share/jenkins/ref/` contains all reference configuration we want
 # to set on a fresh new installation. Use it to bundle additional plugins
