@@ -5,7 +5,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y git curl fuse pyt
  # uncomment user_allow_other
  && sed -i'' 's/^# *user_allow_other/user_allow_other/' /etc/fuse.conf \
  # make it readable by anybody, it is not the default on Ubuntu
- && chmod a+r /etc/fuse.conf \
+ && chmod a+r /etc/fuse.conf 
  
 ARG user=jenkins
 ARG group=jenkins
