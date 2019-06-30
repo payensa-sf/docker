@@ -50,7 +50,6 @@ VOLUME /var/s3
 
 ARG S3FS_VERSION=v1.79
 
-RUN apt-get install -y build-essential
 RUN apt-get install -y libfuse-dev
 RUN apt-get install -y fuse
 RUN apt-get install -y libcurl4-openssl-dev
