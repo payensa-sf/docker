@@ -6,16 +6,7 @@ test $JENKINS_HOME
 rm -rf ${JENKINS_HOME}
 mkdir -p ${JENKINS_HOME}
 
-if [ "$IAM_ROLE" == "none" ]; then
-  export AWSACCESSKEYID=${AWSACCESSKEYID:-$BUCKETEER_AWS_ACCESS_KEY_ID}
-  export AWSSECRETACCESSKEY=${AWSSECRETACCESSKEY:-$BUCKETEER_AWS_SECRET_ACCESS_KEY}
-
-  echo 'IAM_ROLE is not set - mounting S3 with credentials from ENV'
-  /usr/bin/s3fs ${BUCKETEER_BUCKET_NAME} ${JENKINS_HOME} -o nosuid,nonempty,nodev,allow_other,default_acl=${S3_ACL},retries=5
-else
-  echo 'IAM_ROLE is set - using it to mount S3'
-  /usr/bin/s3fs ${BUCKETEER_BUCKET_NAME} ${JENKINS_HOME} -o iam_role=${IAM_ROLE},nosuid,nonempty,nodev,allow_other,default_acl=${S3_ACL},retries=5
-fi
+yas3fs s3://${BUCKETEER_BUCKET_NAME} ${EXPORTED_FOLDER} -f
 
 : "${JENKINS_WAR:="/usr/share/jenkins/jenkins.war"}"
 : "${JENKINS_HOME:="/var/jenkins_home"}"
