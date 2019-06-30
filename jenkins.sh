@@ -6,7 +6,7 @@ test $JENKINS_HOME
 rm -rf ${JENKINS_HOME}
 mkdir -p ${JENKINS_HOME}
 
-yas3fs s3://${BUCKETEER_BUCKET_NAME} ${EXPORTED_FOLDER} -f
+yas3fs s3://${BUCKETEER_BUCKET_NAME} ${JENKINS_HOME} -f
 
 : "${JENKINS_WAR:="/usr/share/jenkins/jenkins.war"}"
 : "${JENKINS_HOME:="/var/jenkins_home"}"
