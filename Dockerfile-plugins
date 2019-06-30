@@ -1,7 +1,7 @@
 FROM openjdk:8-jdk-stretch
 ARG JENKINS_HOME=/var/jenkins_home
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y git curl fuse python-pip && rm -rf /var/lib/apt/lists/* && pip install yas3fs
+RUN apt-get update && apt-get upgrade -y && apt-get install -y git curl fuse python-pip && rm -rf /var/lib/apt/lists/* && pip install yas3fs \
  # uncomment user_allow_other
  && sed -i'' 's/^# *user_allow_other/user_allow_other/' /etc/fuse.conf \
  # make it readable by anybody, it is not the default on Ubuntu
