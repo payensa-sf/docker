@@ -10,7 +10,10 @@ find /usr/share/jenkins/ref/ \( -type f -o -type l \) -exec bash -c '. /usr/loca
 if [[ $# -lt 1 ]] || [[ "$1" == "--"* ]]; then
 
   # read JAVA_OPTS and JENKINS_OPTS into arrays to avoid need for eval (and associated vulnerabilities)
-  java_opts_array=('-Xmx512m')
+  java_opts_array=( \
+    '-Xmx512m' \
+    '-XX:MaxPermSize=512m' \
+  )
   while IFS= read -r -d '' item; do
     java_opts_array+=( "$item" )
   done < <([[ $JAVA_OPTS ]] && xargs printf '%s\0' <<<"$JAVA_OPTS")
