@@ -1,5 +1,5 @@
 build:
   docker:
-    web: Dockerfile-alpine
+    web: Dockerfile
 run:
   web: /sbin/tini /usr/local/bin/jenkins.sh
