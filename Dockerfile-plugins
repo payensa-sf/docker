@@ -42,6 +42,25 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/${TINI_VERSION}
   && rm -rf /sbin/tini.asc /root/.gnupg \
   && chmod +x /sbin/tini
 
+# S3 BLOCK
+# the following ENV need to be present
+ENV IAM_ROLE=none
+ENV MOUNT_POINT=/var/s3
+VOLUME /var/s3
+
+ARG S3FS_VERSION=v1.79
+
+RUN apk --update add fuse libxml2-dev fuse-dev curl-dev git bash;
+RUN git clone https://github.com/s3fs-fuse/s3fs-fuse.git; \
+ cd s3fs-fuse; \
+ git checkout tags/${S3FS_VERSION}; \
+ ./autogen.sh; \
+ ./configure --prefix=/usr; \
+ make; \
+ make install; \
+ rm -rf /var/cache/apk/*;
+# END OF S3
+
 # jenkins version being bundled in this docker image
 ARG JENKINS_VERSION
 ENV JENKINS_VERSION ${JENKINS_VERSION:-2.182}
