@@ -1,6 +1,8 @@
 #! /bin/bash -e
 
 export S3_ACL=${S3_ACL:-private}
+export AWS_ACCESS_KEY_ID=${BUCKETEER_AWS_ACCESS_KEY_ID}
+export AWS_SECRET_ACCESS_KEY=${BUCKETEER_AWS_SECRET_ACCESS_KEY}
 
 test $JENKINS_HOME
 rm -rf ${JENKINS_HOME}
