@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk-stretch
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y git curl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get upgrade -y && apt-get install -y git curl nfs-common && rm -rf /var/lib/apt/lists/*
 
 ARG user=jenkins
 ARG group=jenkins
@@ -16,9 +16,9 @@ ENV JENKINS_SLAVE_AGENT_PORT ${agent_port}
 # Jenkins is run with user `jenkins`, uid = 1000
 # If you bind mount a volume from the host or a data container,
 # ensure you use the same uid
-RUN ln -s s3data:$JENKINS_HOME $JENKINS_HOME
-# RUN mkdir -p $JENKINS_HOME \
-#  && chown ${uid}:${gid} $JENKINS_HOME \
+
+RUN mkdir -p $JENKINS_HOME \
+  && chown ${uid}:${gid} $JENKINS_HOME 
 RUN groupadd -g ${gid} ${group} \
   && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -s /bin/bash ${user}
 #  && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
