@@ -2,7 +2,8 @@
 
 : "${JENKINS_WAR:="/usr/share/jenkins/jenkins.war"}"
 : "${JENKINS_HOME:="/var/jenkins_home"}"
-sudo mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${EFS_JENKINS_HOME}:/ ${JENKINS_HOME}
+#mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${EFS_JENKINS_HOME}:/ ${JENKINS_HOME}
+mount ${EFS_JENKINS_HOME}:/ ${JENKINS_HOME}
 
 touch "${COPY_REFERENCE_FILE_LOG}" || { echo "Can not write to ${COPY_REFERENCE_FILE_LOG}. Wrong volume permissions?"; exit 1; }
 echo "--- Copying files at $(date)" >> "$COPY_REFERENCE_FILE_LOG"
